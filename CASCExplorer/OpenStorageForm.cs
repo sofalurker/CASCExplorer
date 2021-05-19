@@ -20,7 +20,7 @@ namespace CASCExplorer
 
         private readonly Dictionary<CASCGameType, string[]> sharedInstallProducts = new Dictionary<CASCGameType, string[]>
         {
-            [CASCGameType.WoW] = new string[] { "wow", "wowt", "wow_beta", "wowe1", "wow_classic", "wow_classic_beta", "wow_classic_ptr" },
+            [CASCGameType.WoW] = new string[] { "wow", "wowt", "wow_beta", "wowe1", "wow_classic", "wow_classic_beta", "wow_classic_ptr", "wow_classic_era", "wow_classic_era_beta", "wow_classic_era_ptr" },
             [CASCGameType.WC3] = new string[] { "w3", "w3t" },
         };
 
