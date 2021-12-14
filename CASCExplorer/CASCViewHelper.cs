@@ -282,9 +282,14 @@ namespace CASCExplorer
                                 m2file.Position = 0x14;
                                 int nameOffs = br.ReadInt32();
 
-                                m2file.Position = nameOffs + 8; // + sizeof(MD21)
-                                string m2name = br.ReadCString();
-
+                                string m2name;
+                                if (nameOffs == 0)
+                                    m2name = wowRoot.GetFileDataIdByHash(unknownFile.Hash).ToString();
+                                else
+                                {
+                                    m2file.Position = nameOffs + 8; // + sizeof(MD21)
+                                    m2name = br.ReadCString();
+                                }
                                 unknownFile.FullName = "unknown\\" + m2name + ".m2";
 
                                 Logger.WriteLine($"{wowRoot.GetFileDataIdByHash(unknownFile.Hash)};{unknownFile.FullName}");
