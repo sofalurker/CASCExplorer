@@ -560,14 +560,6 @@ namespace CASCExplorer
                     else
                     {
                         size = "NYI";
-
-                        if (_casc.Root is OwRootHandler owRoot)
-                        {
-                            if (owRoot.GetEntry(entry.Hash, out OWRootEntry rootEntry))
-                            {
-                                size = rootEntry.pkgIndexRec.Size.ToString("N", sizeNumberFmt) ?? "0";
-                            }
-                        }
                     }
 
                     foreach (var rootInfo in rootInfosLocale)
