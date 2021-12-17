@@ -113,7 +113,7 @@ namespace CASCExplorer
                 foreach (var file in installFiles)
                 {
                     if (_casc.Encoding.GetEntry(file.MD5, out EncodingEntry enc))
-                        _casc.SaveFileTo(enc.Key, Path.Combine("data", build, "install_files"), file.Name);
+                        _casc.SaveFileTo(enc.Keys[0], Path.Combine("data", build, "install_files"), file.Name);
 
                     progress.Report((int)(++numDone / (float)numFiles * 100));
                 }
@@ -744,13 +744,13 @@ namespace CASCExplorer
             //_casc.SaveFileTo(_casc.Config.PatchKey, ".", "patch");
 
             if (_casc.Encoding.GetEntry(_casc.Config.RootMD5, out EncodingEntry enc))
-                _casc.SaveFileTo(enc.Key, ".", "root");
+                _casc.SaveFileTo(enc.Keys[0], ".", "root");
 
             if (_casc.Encoding.GetEntry(_casc.Config.InstallMD5, out enc))
-                _casc.SaveFileTo(enc.Key, ".", "install");
+                _casc.SaveFileTo(enc.Keys[0], ".", "install");
 
             if (_casc.Encoding.GetEntry(_casc.Config.DownloadMD5, out enc))
-                _casc.SaveFileTo(enc.Key, ".", "download");
+                _casc.SaveFileTo(enc.Keys[0], ".", "download");
 
             //if (_casc.Encoding.GetEntry(_casc.Config.PartialPriorityMD5, out enc))
             //    _casc.SaveFileTo(enc.Key, ".", "partial-priority");
