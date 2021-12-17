@@ -329,7 +329,7 @@ namespace CASCExplorer
                     progress.Report((int)(++numDone / (float)numTotal * 100));
                 }
 
-                _casc.Root.Dump();
+                _casc.Root.Dump(_casc.Encoding);
             });
         }
 
