@@ -549,44 +549,16 @@ namespace CASCExplorer
 
             if (entry is CASCFile)
             {
+                size = _casc.GetFileSize(entry.Hash).ToString("N", sizeNumberFmt);
+
                 var rootInfosLocale = _casc.Root.GetEntries(entry.Hash);
 
                 if (rootInfosLocale.Any())
                 {
-                    if (_casc.Encoding.GetEntry(rootInfosLocale.First().MD5, out EncodingEntry enc))
-                    {
-                        size = enc.Size.ToString("N", sizeNumberFmt) ?? "0";
-                    }
-                    else
-                    {
-                        size = "NYI";
-                    }
-
                     foreach (var rootInfo in rootInfosLocale)
                     {
                         localeFlags |= rootInfo.LocaleFlags;
                         contentFlags |= rootInfo.ContentFlags;
-                    }
-                }
-                else
-                {
-                    var installInfos = _casc.Install.GetEntries(entry.Hash);
-
-                    if (installInfos.Any())
-                    {
-                        if (_casc.Encoding.GetEntry(installInfos.First().MD5, out EncodingEntry enc))
-                        {
-                            size = enc.Size.ToString("N", sizeNumberFmt) ?? "0";
-
-                            //foreach (var rootInfo in rootInfosLocale)
-                            //{
-                            //    if (rootInfo.Block != null)
-                            //    {
-                            //        localeFlags |= rootInfo.Block.LocaleFlags;
-                            //        contentFlags |= rootInfo.Block.ContentFlags;
-                            //    }
-                            //}
-                        }
                     }
                 }
             }
@@ -739,17 +711,17 @@ namespace CASCExplorer
             if (_casc == null)
                 return;
 
-            _casc.SaveFileTo(_casc.Config.EncodingKey, ".", "encoding");
+            _casc.SaveFileTo(_casc.Config.EncodingEKey, ".", "encoding");
 
             //_casc.SaveFileTo(_casc.Config.PatchKey, ".", "patch");
 
-            if (_casc.Encoding.GetEntry(_casc.Config.RootMD5, out EncodingEntry enc))
+            if (_casc.Encoding.GetEntry(_casc.Config.RootCKey, out EncodingEntry enc))
                 _casc.SaveFileTo(enc.Keys[0], ".", "root");
 
-            if (_casc.Encoding.GetEntry(_casc.Config.InstallMD5, out enc))
+            if (_casc.Encoding.GetEntry(_casc.Config.InstallCKey, out enc))
                 _casc.SaveFileTo(enc.Keys[0], ".", "install");
 
-            if (_casc.Encoding.GetEntry(_casc.Config.DownloadMD5, out enc))
+            if (_casc.Encoding.GetEntry(_casc.Config.DownloadCKey, out enc))
                 _casc.SaveFileTo(enc.Keys[0], ".", "download");
 
             //if (_casc.Encoding.GetEntry(_casc.Config.PartialPriorityMD5, out enc))
