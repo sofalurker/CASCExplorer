@@ -293,35 +293,6 @@ namespace CASCExplorer
                                 unknownFile.FullName = "unknown\\" + m2name + ".m2";
 
                                 Logger.WriteLine($"{wowRoot.GetFileDataIdByHash(unknownFile.Hash)};{unknownFile.FullName}");
-
-                                //m2file.Position = 0;
-
-                                //while (m2file.Position != m2file.Length)
-                                //{
-                                //    int chunkType = br.ReadInt32();
-                                //    int chunkSize = br.ReadInt32();
-
-                                //    if (chunkType == 0x44494641) // AFID
-                                //    {
-                                //        int count = chunkSize / 8;
-
-                                //        for (int i = 0; i < count; i++)
-                                //        {
-                                //            ushort animId = br.ReadUInt16();
-                                //            ushort subAnimId = br.ReadUInt16();
-                                //            int FileDataId = br.ReadInt32();
-
-                                //            if (FileDataId != 0)
-                                //                Logger.WriteLine($"{FileDataId};{wowRoot.GetFileDataIdByHash(unknownFile.Hash)}\\{name}\\{name}{animId:D4}-{subAnimId:D2}.anim");
-                                //        }
-
-                                //        break;
-                                //    }
-                                //    else
-                                //    {
-                                //        m2file.Position += chunkSize;
-                                //    }
-                                //}
                             }
                         }
                     }
@@ -650,25 +621,6 @@ namespace CASCExplorer
                         }
                     }
                 }
-
-                //var wr = CASC.Root as WowRootHandler;
-
-                //SortedDictionary<int, string> fids = new SortedDictionary<int, string>();
-
-                //foreach (var file in CASCFile.FileNames)
-                //{
-                //    var id = wr.GetFileDataIdByName(file.Value);
-
-                //    if (id > 0)
-                //    {
-                //        fids[id] = file.Value;
-                //    }
-                //}
-
-                //foreach (var file in fids)
-                //{
-                //    sw.WriteLine("{0} {1}", file.Key, file.Value);
-                //}
             }
         }
 
