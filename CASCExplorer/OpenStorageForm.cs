@@ -43,12 +43,6 @@ namespace CASCExplorer
 
             string path = storageFolderBrowserDialog.SelectedPath;
 
-            if (!File.Exists(Path.Combine(path, ".build.info")))
-            {
-                MessageBox.Show("Selected folder isn't valid CASC storage!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             textBox1.Text = path;
         }
 
