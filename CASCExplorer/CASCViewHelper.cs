@@ -408,22 +408,23 @@ namespace CASCExplorer
 
             Settings.Default.LocaleFlags = (LocaleFlags)Enum.Parse(typeof(LocaleFlags), locale);
 
-            _root = _casc.Root.SetFlags(Settings.Default.LocaleFlags, Settings.Default.OverrideArchive);
+            _root = _casc.Root.SetFlags(Settings.Default.LocaleFlags, Settings.Default.OverrideArchive, Settings.Default.PreferHighResTextures);
             _casc.Root.MergeInstall(_casc.Install);
 
             OnStorageChanged?.Invoke();
         }
 
-        public void SetOverrideArchive(bool set)
+        public void SetOverrideArchive(bool overrideArchive, bool preferHighResTextures)
         {
             if (_casc == null)
                 return;
 
             OnCleanup?.Invoke();
 
-            Settings.Default.OverrideArchive = set;
+            Settings.Default.OverrideArchive = overrideArchive;
+            Settings.Default.PreferHighResTextures = preferHighResTextures;
 
-            _root = _casc.Root.SetFlags(Settings.Default.LocaleFlags, Settings.Default.OverrideArchive);
+            _root = _casc.Root.SetFlags(Settings.Default.LocaleFlags, Settings.Default.OverrideArchive, Settings.Default.PreferHighResTextures);
             _casc.Root.MergeInstall(_casc.Install);
 
             OnStorageChanged?.Invoke();
