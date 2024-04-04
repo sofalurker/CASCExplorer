@@ -29,7 +29,7 @@ namespace CASCConsole
         public bool PreferHighResTextures { get; set; }
     }
 
-    internal class IdaKeyOptionsBinder : BinderBase<CASCConsoleOptions>
+    internal class CASCConsoleOptionsBinder : BinderBase<CASCConsoleOptions>
     {
         private readonly Option<ExtractMode> modeOption = new Option<ExtractMode>(new[] { "-m", "--mode" }, "Extraction mode") { IsRequired = true };
         private readonly Option<string> modeParamOption = new Option<string>(new[] { "-e", "--eparam" }, "Extraction mode parameter (example: *.* or listfile.csv)") { IsRequired = true };
@@ -43,7 +43,7 @@ namespace CASCConsole
 
         public RootCommand Root { get; }
 
-        public IdaKeyOptionsBinder()
+        public CASCConsoleOptionsBinder()
         {
             Root = new RootCommand("CASCConsole") { modeOption, modeParamOption, destOption, localeOption, productOption, onlineOption, storagePathOption, overrideArchiveOption, preferHighResTexturesOption };
         }
@@ -195,11 +195,11 @@ namespace CASCConsole
             //    }
             //}
 
-            var commandsBinder = new IdaKeyOptionsBinder();
+            var commandsBinder = new CASCConsoleOptionsBinder();
 
             commandsBinder.Root.SetHandler((CASCConsoleOptions options) => {
                 Extract(options.Mode, options.ModeParam, options.DestFolder, options.Locale, options.Product, options.Online, options.StoragePath, options.OverrideArchive, options.PreferHighResTextures);
-            }, new IdaKeyOptionsBinder());
+            }, new CASCConsoleOptionsBinder());
             commandsBinder.Root.Invoke(args);
         }
 
