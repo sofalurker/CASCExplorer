@@ -199,7 +199,7 @@ namespace CASCConsole
 
             commandsBinder.Root.SetHandler((CASCConsoleOptions options) => {
                 Extract(options.Mode, options.ModeParam, options.DestFolder, options.Locale, options.Product, options.Online, options.StoragePath, options.OverrideArchive, options.PreferHighResTextures);
-            }, new CASCConsoleOptionsBinder());
+            }, commandsBinder);
             commandsBinder.Root.Invoke(args);
         }
 
@@ -209,8 +209,16 @@ namespace CASCConsole
 
             Console.WriteLine($"Started at {startTime}");
 
-            Console.WriteLine("Settings:");
+            Console.WriteLine("Extract params:");
+            Console.WriteLine("  Mode: {0}", mode);
+            Console.WriteLine("  Mode Param: {0}", modeParam);
+            Console.WriteLine("  Destination: {0}", destFolder);
+            Console.WriteLine("  LocaleFlags: {0}", locale);
+            Console.WriteLine("  Product: {0}", product);
+            Console.WriteLine("  Online: {0}", online);
             Console.WriteLine("  Storage Path: {0}", storagePath);
+            Console.WriteLine("  OverrideArchive: {0}", overrideArchive);
+            Console.WriteLine("  PreferHighResTextures: {0}", preferHighResTextures);
 
             Console.WriteLine("Loading...");
 
@@ -230,15 +238,6 @@ namespace CASCConsole
             cascHandler.Root.MergeInstall(cascHandler.Install);
 
             Console.WriteLine("Loaded.");
-
-            Console.WriteLine("Extract params:");
-            Console.WriteLine("  Mode: {0}", mode);
-            Console.WriteLine("  Mode Param: {0}", modeParam);
-            Console.WriteLine("  Destination: {0}", destFolder);
-            Console.WriteLine("  LocaleFlags: {0}", locale);
-            Console.WriteLine("  Product: {0}", product);
-            Console.WriteLine("  Online: {0}", online);
-            Console.WriteLine("  OverrideArchive: {0}", overrideArchive);
 
             if (mode == ExtractMode.Pattern)
             {
