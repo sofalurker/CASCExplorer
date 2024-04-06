@@ -237,7 +237,7 @@ namespace CASCConsole
             CASCFolder root = cascHandler.Root.SetFlags(locale, overrideArchive, preferHighResTextures);
             cascHandler.Root.MergeInstall(cascHandler.Install);
 
-            Console.WriteLine("Loaded.");
+            Console.WriteLine($"Loaded {config.Product} {config.VersionName}");
 
             if (mode == ExtractMode.Pattern)
             {
