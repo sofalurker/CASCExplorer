@@ -31,7 +31,7 @@ namespace CASCConsole
         public int Threads { get; set; }
     }
 
-    internal class CASCConsoleOptionsBinder : BinderBase<ExtractionOptions>
+    internal class OptionsBinder : BinderBase<ExtractionOptions>
     {
         private readonly Option<ExtractMode> modeOption = new Option<ExtractMode>(new[] { "-m", "--mode" }, "Extraction mode") { IsRequired = true };
         private readonly Option<string> modeParamOption = new Option<string>(new[] { "-e", "--eparam" }, "Extraction mode parameter (example: *.* or listfile.csv)") { IsRequired = true };
@@ -46,7 +46,7 @@ namespace CASCConsole
 
         public RootCommand Root { get; }
 
-        public CASCConsoleOptionsBinder()
+        public OptionsBinder()
         {
             Root = new RootCommand("CASCConsole") { modeOption, modeParamOption, destOption, localeOption, productOption, onlineOption, storagePathOption, overrideArchiveOption, preferHighResTexturesOption, threads };
         }
@@ -199,7 +199,7 @@ namespace CASCConsole
             //    }
             //}
 
-            var commandsBinder = new CASCConsoleOptionsBinder();
+            var commandsBinder = new OptionsBinder();
             commandsBinder.Root.SetHandler((ExtractionOptions options) => Extract(options), commandsBinder);
             commandsBinder.Root.Invoke(args);
         }
@@ -256,7 +256,7 @@ namespace CASCConsole
 
             private void BuildHandler()
             {
-                BackgroundWorkerEx bgLoader = new BackgroundWorkerEx();
+                var bgLoader = new BackgroundWorkerEx();
                 bgLoader.ProgressChanged += BgLoader_ProgressChanged;
 
                 CASCConfig.LoadFlags |= LoadFlags.Install;
@@ -278,13 +278,12 @@ namespace CASCConsole
 
                 if (config.Mode == ExtractMode.Pattern)
                 {
-                    var wildcard = new Wildcard(config.ModeParam, true, RegexOptions.IgnoreCase);
-
                     var entries = root
                         .Folders
                         .Select(kv => kv.Value as ICASCEntry)
                         .Concat(root.Files.Select(kv => kv.Value));
 
+                    var wildcard = new Wildcard(config.ModeParam, true, RegexOptions.IgnoreCase);
                     return CASCFolder.GetFiles(entries).Where(file => wildcard.IsMatch(file.FullName));
                 }
 
@@ -311,10 +310,7 @@ namespace CASCConsole
                 foreach (var file in GetFiles())
                 {
                     index++;
-                    if (index % threadCount != threadIndex)
-                    {
-                        continue;
-                    }
+                    if (index % threadCount != threadIndex) { continue; }
 
                     ExtractFile(handler, file.Hash, file.FullName, config.DestFolder);
                 }
